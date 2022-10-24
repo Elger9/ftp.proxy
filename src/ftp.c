@@ -105,6 +105,7 @@ ftpcmd_t cmdtab[] = {
 
     { "LIST", 1, 1, 1,	0, 0 },
     { "NLST", 1, 1, 1,	0, 0 },
+    { "MLSD", 1, 1, 1,	0, 0 },
     { "PORT", 1, 0, 0,	0, /* 200, */ 0 },
     { "PASV", 0, 0, 0,	0, /* 200, */ 0 },
     { "ALLO", 1, 0, 0,	0, /* 200, */ 0 },
@@ -2056,7 +2057,7 @@ int proxy_request(config_t *config)
 					get_word(&p, parameter, sizeof(parameter));
 					
 				if (*parameter == 0) {
-					if (strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0)
+					if (strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0 ||  strcmp(command, "MLSD") == 0)
 						/* nichts, ist ok */ ;
 					else {
 						printerror(1 | ERR_OTHER, "-ERR", "parameter required: %s", command);
@@ -2067,7 +2068,7 @@ int proxy_request(config_t *config)
 
 			if (cmd->ispath != 0) {
 				if (x->config->monitor) {
-					if ((strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0)
+					if ((strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0 ||  strcmp(command, "MLSD") == 0)
 					    &&  *parameter == 0) {
 
 						/*
@@ -2103,7 +2104,7 @@ int proxy_request(config_t *config)
 			dofeat(x);
 		else if (strcmp(command, "PASV") == 0)
 			dopasv(x, command, parameter);
-		else if (strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0) {
+		else if (strcmp(command, "LIST") == 0  ||  strcmp(command, "NLST") == 0 ||  strcmp(command, "MLSD") == 0) {
 			x->ch.operation = OP_GET;	/* fuer PASV mode */
 			rc = sfputc(x, command, parameter, line, sizeof(line), NULL);
 			if (rc == 125  ||  rc == 150) {
