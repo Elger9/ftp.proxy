@@ -1,3 +1,6 @@
+# About this fork 
+Fork of the https://github.com/ftpproxy/ftp.proxy repository with added support for the NLST command.
+
 # ftp.proxy
 ftp.proxy is an application level gateway for FTP. It sits between a client and a server forwarding command and data streams supporting a subset of the file transfer protocol as described in RFC 959.
 
